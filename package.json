@@ -1,0 +1,30 @@
+{
+  "name": "something-something",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^4.5.9",
+    "@fontsource/ibm-plex-sans": "^4.5.10",
+    "card-validator": "^8.1.1",
+    "clsx": "^1.1.1",
+    "lodash": "^4.17.21",
+    "modern-normalize": "^1.1.0",
+    "next": "12.1.6",
+    "prettier": "^2.6.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-hook-form": "^7.31.2",
+    "sass": "^1.52.1",
+    "tachyons": "^4.12.0"
+  },
+  "devDependencies": {
+    "eslint": "8.16.0",
+    "eslint-config-next": "12.1.6"
+  }
+}
