@@ -4,17 +4,24 @@ import clsx from "clsx";
 const cv = require("card-validator");
 
 const onSubmit = async (data) => {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000);
+  const res = await fetch("/api/acceptCard", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
   });
-  console.log(data);
+  if (!res.ok) {
+    throw new Error("request failed");
+  }
 };
 
 export const PaymentForm = (props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted, isSubmitting, isValid },
+    formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
     trigger,
   } = useForm();
 
@@ -83,7 +90,7 @@ export const PaymentForm = (props) => {
             validate: (v) => cv.postalCode(v)?.isValid || "Invalid ZIP",
           })}
           placeholder="54321"
-          onBlur={() => trigger("zip")}
+          onChange={() => trigger("zip")}
         />
       </div>
       <button
@@ -91,10 +98,14 @@ export const PaymentForm = (props) => {
         onFocus={() => trigger()}
         disabled={isSubmitting || !isValid}
         className={clsx(
-          "mt4 pa2 br2",
+          "mt4 pa2 br2 pointer",
           isValid && !isSubmitting && "dark-green b--dark-green bg-light-green"
         )}>
-        {isSubmitting ? "Submitting..." : "Submit"}
+        {isSubmitSuccessful
+          ? "Success!"
+          : isSubmitting
+          ? "Submitting..."
+          : "Submit"}
       </button>
     </form>
   );
