@@ -30,8 +30,6 @@ export const PaymentForm = (props) => {
             required: true,
             maxLength: 16,
             validate: (v) => {
-              console.debug(v);
-              console.debug(cv.number(v));
               return cv.number(v)?.isValid || "Invalid card number";
             },
           })}
@@ -46,7 +44,8 @@ export const PaymentForm = (props) => {
           {...register("expMonth", {
             required: true,
             maxLength: 2,
-            validate: (v) => cv.expirationMonth(v).isValid,
+            validate: (v) =>
+              cv.expirationMonth(v)?.isValid || "Invalid expiration month",
           })}
           className={clsx(errors?.expMonth && "b--light-red")}
           placeholder="12"
@@ -58,7 +57,8 @@ export const PaymentForm = (props) => {
         <input
           {...register("expYear", {
             required: true,
-            validate: (v) => cv.expirationYear(v).isValid,
+            validate: (v) =>
+              cv.expirationYear(v)?.isValid || "Invalid expiration year",
           })}
           placeholder="2022"
           onBlur={() => trigger("expYear")}
@@ -69,7 +69,7 @@ export const PaymentForm = (props) => {
         <input
           {...register("cvv", {
             required: true,
-            validate: (v) => cv.cvv(v, { minLength: 5 }).isValid,
+            validate: (v) => cv.cvv(v)?.isValid || "Invalid CVV",
           })}
           placeholder="999"
           onBlur={() => trigger("cvv")}
@@ -80,7 +80,7 @@ export const PaymentForm = (props) => {
         <input
           {...register("zip", {
             required: true,
-            validate: (v) => cv.postalCode(v, { minLength: 5 }).isValid,
+            validate: (v) => cv.postalCode(v)?.isValid || "Invalid ZIP",
           })}
           placeholder="54321"
           onBlur={() => trigger("zip")}
@@ -92,9 +92,9 @@ export const PaymentForm = (props) => {
         disabled={isSubmitting || !isValid}
         className={clsx(
           "mt4 pa2 br2",
-          isValid && "dark-green b--dark-green bg-light-green"
+          isValid && !isSubmitting && "dark-green b--dark-green bg-light-green"
         )}>
-        Submit
+        {isSubmitting ? "Submitting..." : "Submit"}
       </button>
     </form>
   );
