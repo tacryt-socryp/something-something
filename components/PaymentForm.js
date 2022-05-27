@@ -17,7 +17,7 @@ const onSubmit = async (data) => {
   }
 };
 
-export const PaymentForm = (props) => {
+export const PaymentForm = () => {
   const {
     register,
     handleSubmit,
